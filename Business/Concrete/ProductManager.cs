@@ -29,7 +29,7 @@ namespace Business.Concrete
             _productDal = productDal;
              _categoryService= categoryService;
         }
-        [SecuredOperation("admin.product,admin")]
+        [SecuredOperation("admin")]
         [ValidationAspect(typeof(ProductValidator))]
         public IResult Add(Product product)
         {
@@ -37,7 +37,7 @@ namespace Business.Concrete
                                          CheckIfProductNameExists(product.ProductName), CheckIfCategoryCount());
 
 
-            if (result !=null)
+            if (result !=null)// sorun burada kontrol et......
             {
                 return result;
             }
@@ -54,6 +54,7 @@ namespace Business.Concrete
 
         }
 
+        [SecuredOperation("admin")]
         public IDataResult<List<Product>> GetAll()
         {
             // işkodları çalış>cak
@@ -98,18 +99,18 @@ namespace Business.Concrete
 
         private IResult CehckIfProductCountOfCAtegoryCorrect(int categoryId)
         {
-            var result = _productDal.GetAll(p => p.CategoryId == p.CategoryId).Count();
+            var result = _productDal.GetAll(p => p.CategoryId == categoryId).Count();
 
-            if (result >= 10)
+            if (result > 20)
             {
-                return new ErrorResult();
+                return new ErrorResult("Bu kategori dolu");
             }
             return new SuccessResult();
         }
         private IResult CheckIfProductNameExists(string productName)
         {
 
-            var result = _productDal.GetAll(p => p.ProductName == p.ProductName).Any();
+            var result = _productDal.GetAll(p => p.ProductName == productName).Any();
 
             if (result)
             {

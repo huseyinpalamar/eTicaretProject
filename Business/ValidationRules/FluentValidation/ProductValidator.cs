@@ -18,15 +18,11 @@ namespace Business.ValidationRules.FluentValidation
             // aralara kurallar koyabiliriz.
             RuleFor(p => p.UnitPrice).GreaterThanOrEqualTo(2);
             // must ile kendi kuralını koy
-            RuleFor(p => p.ProductName).Must(StartWithA).WithMessage("Ürünler A ile başlamalı");
+            
             
 
         }
 
-        private bool StartWithA(string arg)
-        {
-            // a ile başlamalı . A ile başlamıyorsa false döner. A ile başlarsa true döner 
-            return arg.StartsWith("A");
-        }
+        
     }
 }

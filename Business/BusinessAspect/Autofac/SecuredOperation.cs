@@ -20,7 +20,6 @@ namespace Business.BusinessAspect.Autofac
 
         public SecuredOperation(string roles)
         {
-            // attributlerde stringler bu şekilde ayrılır. Split ile karakterleri ayırıp array haline getiri
             _roles = roles.Split(',');
             _httpContextAccessor = ServiceTool.ServiceProvider.GetService<IHttpContextAccessor>();
 
